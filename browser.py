@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import sys
 import re
@@ -23,16 +24,22 @@ def browser():
     url = ''
     stack = deque()
     history = {}
-    while url != 'exit':
-        url = input()
+    while True:
+        url = input('Enter a website url: ')
+        if url.lower() == 'exit' or url.lower() == 'quit':
+            print('Goodbye!')
+            exit()
         if url == 'back' and stack:
-            stack.pop()
-            print(stack.pop())
+            if len(stack) == 1:
+                print(stack.pop())
+            else:
+                stack.pop()
+                print(stack.pop())
         elif url == 'back':
             return
         else:
             # validation = re.match(r"[\w]+[\.][\w]+\.*\w*", url)
-            validation = url[-3:] in ['com', 'org', 'net', 'gov']
+            validation = url[-3:] in ['com', 'org', 'net', 'gov', 'edu']
             if not validation and history.get(url) is None:
                 print('Incorrect URL')
                 exit()
@@ -42,6 +49,7 @@ def browser():
                 stack.append(text)
             elif not url.startswith('https://'):
                 url = 'https://' + url
+            if url.startswith('https://'):
                 name = user_dir + '/' + url[8:].split('.')[0]
                 try:
                     request = requests.get(url)
