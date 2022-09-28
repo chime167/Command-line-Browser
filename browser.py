@@ -38,8 +38,8 @@ def browser():
         elif url == 'back':
             return
         else:
-            # validation = re.match(r"[\w]+[\.][\w]+\.*\w*", url)
-            validation = url[-3:] in ['com', 'org', 'net', 'gov', 'edu']
+            validation = re.match(r"[\S]+", url)
+            # validation = url[-3:] in ['com', 'org', 'net', 'gov', 'edu']
             if not validation and history.get(url) is None:
                 print('Incorrect URL')
                 exit()
