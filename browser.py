@@ -70,4 +70,4 @@ def browser():
                     print(open(name).read())
 
 
-browser()
+if __name__ == '__main__': browser()
